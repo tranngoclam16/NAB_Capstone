@@ -1,16 +1,18 @@
 import mongoose from 'mongoose'
 import crypto from 'crypto'
+    
 const UserSchema = new mongoose.Schema({
   name: {
     type: String,
     trim: true,
+    // match : [/[a-zA-Z]/, 'Name must not contain special characters.'],
     required: 'Name is required'
   },
   email: {
     type: String,
     trim: true,
     unique: true,
-    match: [/.+\@.+\..+/, 'Please fill a valid email address'],
+    match: [/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please fill a valid email address'],
     required: 'Email is required'
   },
   hashed_password: {
@@ -41,7 +43,10 @@ UserSchema
   })
 
 UserSchema.path('hashed_password').validate(function(v) {
-  if (this._password && this._password.length < 8) {
+  // if (this.name && this.name.length < 8) {
+  //   this.invalidate('name', 'Name must be at least 8 characters.')
+  // }
+  if (this._password && this._password.length == 0) {
     this.invalidate('password', 'Password must be at least 8 characters.')
   }
   if (this._password && !this._password.match(/[a-z]/g)) {
@@ -55,6 +60,24 @@ UserSchema.path('hashed_password').validate(function(v) {
   }
   if (this.isNew && !this._password) {
     this.invalidate('password', 'Password is required')
+  }
+}, null)
+
+// UserSchema.path('email').validate(function(v) {
+//   if (validator.check(v).isEmail()) {
+//     this.invalidate('email', 'Please fill a valid email address.');
+//   }
+// }, null);
+
+UserSchema.path('name').validate(function(v) {
+  // if (this.name && this.name.length < 8) {
+  //   this.invalidate('name', 'Name must be at least 8 characters.')
+  // }
+  if (this.name && !this.name.match(/[a-zA-Z]/g)) {
+    this.invalidate('name', 'Name must not contain special characters.')
+  }
+  if (this.name && this.name.match(/[0-9]/g)) {
+    this.invalidate('name', 'Name must not contain number.')
   }
 }, null)
 
