@@ -10,6 +10,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import auth from './../auth/auth-helper'
 import {Redirect} from 'react-router-dom'
 import {signin} from './api-auth.js'
+import { create } from '../user/api-user.js'
 
 const useStyles = makeStyles(theme => ({
   card: {
@@ -47,6 +48,81 @@ export default function Signin(props) {
   })
 
   const clickSubmit = () => {
+    let err = ''
+    if (values.email.trim().length == 0){
+      err += 'Email'
+    }
+    
+    if (values.password.trim().length == 0){
+      err += err.length == 0 ? 'Password': ' and Password'
+    }
+    
+    if (err.length > 0) {
+      err += err.length > 5 ? " are required" : " is required"
+      setValues({ ...values, error: err})
+      return 
+    }
+
+    // const tempUser = {
+    //   name: "Test",
+    //   email: values.email || undefined,
+    //   password: values.password || undefined
+    // }
+    // create(tempUser).then((data) => {
+    //   if (data.error) {
+    //     setValues({ ...values, error: data.error })
+    //     return 
+    //   } 
+    // })
+
+    if (!values.password) {
+      setValues({ ...values, error: 'Password is required'})
+      return 
+     
+    }
+    let error = ''
+    if (values.password && values.password.length < 8) {
+      error = 'Password must have at least 8 characters'
+    }
+    if (values.password && !values.password.match(/[a-z]/g)) {
+      if (error.length == 0 ){
+        error = 'Password must have at least one lowercase letter'
+      }
+      else {
+        error += ', one lowercase letter'
+      }
+    }
+    if (values.password && !values.password.match(/[A-Z]/g)) {
+      if (error.length == 0 ){
+        error = 'Password must have at least one uppercase letter'
+      }
+      else {
+        error += ', one uppercase letter'
+      }
+    }
+  
+    if (values.password && !values.password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/)) {
+      if (error.length == 0 ){
+        error = 'Password must have at least one special character'
+      }
+      else {
+        error += ', one special character'
+      }
+    }
+    if (values.password && !values.password.match(/[0-9]/g)) {
+      if (error.length == 0 ){
+        error = 'Password must have at least one number letter'
+      }
+      else {
+        error += ', one number letter'
+      }
+    }
+  
+    if (error.length > 0){
+      setValues({ ...values, error: error + '.'})
+      return 
+    }
+
     const user = {
       email: values.email || undefined,
       password: values.password || undefined

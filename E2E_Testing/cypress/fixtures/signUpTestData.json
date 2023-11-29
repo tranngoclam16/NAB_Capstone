@@ -1,0 +1,66 @@
+[
+    {
+        "name": "Tran Ngoc Lam",
+        "email": "ngoclam@gmail.com",
+        "password": "@Bcd1234",
+        "message": "New account successfully created."
+    },
+    {
+        "message": "Name is required"
+    },
+    {
+        "name": " ",
+        "email": " ",
+        "password": "@Bcd1234",
+        "message": "Name is required"
+    },
+    {
+        "invalidName": [
+            {
+                "name": "L@m",
+                "message": "Name must not contains special character."
+            },
+            {
+                "name": "L@m Tran123",
+                "message": "Name must not contain special characters and number."
+            }
+        ],
+        "email": "tranngoclam@gmail.com",
+        "password": "@Bcd1234"
+    },
+    {
+        "name": "lam",
+        "invalidEmail": [
+            "tranngoclam",
+            "tranngoclam@",
+            "tranngoclam@gmail",
+            "tranngoclam@gmail....com"
+        ],
+        "password": "@Bcd1234",
+        "message": "Please fill a valid email address"
+    },
+    {
+        "name": "Lam",
+        "email": "tranngoclam@gmail.com",
+        "invalidPassword": [
+            {
+                "password":"@Bcd123",
+                "message" : "Password must have at least 8 characters."
+            },
+            {
+                "password":"1234567",
+                "message" : "Password must have at least 8 characters, one lowercase letter, one uppercase letter, one special character."
+            },
+            {
+                "password":"Bcd1234",
+                "message" : "Password must have at least 8 characters, one special character."
+            },
+            {
+                "password":"@1234",
+                "message" : "Password must have at least 8 characters, one lowercase letter, one uppercase letter."
+            }
+         
+        ]
+        
+    }
+]

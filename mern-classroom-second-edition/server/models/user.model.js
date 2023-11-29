@@ -43,42 +43,79 @@ UserSchema
   })
 
 UserSchema.path('hashed_password').validate(function(v) {
-  // if (this.name && this.name.length < 8) {
-  //   this.invalidate('name', 'Name must be at least 8 characters.')
-  // }
-  if (this._password && this._password.length == 0) {
-    this.invalidate('password', 'Password must be at least 8 characters.')
-  }
-  if (this._password && !this._password.match(/[a-z]/g)) {
-    this.invalidate('password', 'Password must have at least one lowercase letter.')
-  }
-  if (this._password && !this._password.match(/[A-Z]/g)) {
-    this.invalidate('password', 'Password must have at least one uppercase letter.')
-  }
-  if (this._password && !this._password.match(/[0-9]/g)) {
-    this.invalidate('password', 'Password must have at least one number letter.')
-  }
   if (this.isNew && !this._password) {
     this.invalidate('password', 'Password is required')
   }
+  let error = ''
+  if (this._password && this._password.length < 8) {
+    error = 'Password must have at least 8 characters'
+  }
+  if (this._password && !this._password.match(/[a-z]/g)) {
+    if (error.length == 0 ){
+      error = 'Password must have at least one lowercase letter'
+    }
+    else {
+      error += ', one lowercase letter'
+    }
+  }
+  if (this._password && !this._password.match(/[A-Z]/g)) {
+    if (error.length == 0 ){
+      error = 'Password must have at least one uppercase letter'
+    }
+    else {
+      error += ', one uppercase letter'
+    }
+  }
+
+  if (this._password && !this._password.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/)) {
+    if (error.length == 0 ){
+      error = 'Password must have at least one special character'
+    }
+    else {
+      error += ', one special character'
+    }
+  }
+  if (this._password && !this._password.match(/[0-9]/g)) {
+    if (error.length == 0 ){
+      error = 'Password must have at least one number letter'
+    }
+    else {
+      error += ', one number letter'
+    }
+  }
+
+  if (error.length > 0){
+    this.invalidate('password', error + '.')
+  }
 }, null)
 
-// UserSchema.path('email').validate(function(v) {
-//   if (validator.check(v).isEmail()) {
-//     this.invalidate('email', 'Please fill a valid email address.');
-//   }
-// }, null);
 
 UserSchema.path('name').validate(function(v) {
-  // if (this.name && this.name.length < 8) {
-  //   this.invalidate('name', 'Name must be at least 8 characters.')
-  // }
-  if (this.name && !this.name.match(/[a-zA-Z]/g)) {
-    this.invalidate('name', 'Name must not contain special characters.')
+  let error = ''
+  if (this.name && this.name.match(/[`!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/)) {
+    error = 'Name must not contain special characters'
   }
   if (this.name && this.name.match(/[0-9]/g)) {
-    this.invalidate('name', 'Name must not contain number.')
+    if (error.length > 0){
+      error += ' and number'
+    }
+    else {
+      error ='Name must not contain number'
+    }
   }
+  if (error.length > 0){
+    this.invalidate('name', error + '.')
+  }
+
+
+  // if (this.name && !this.name.match(/^[^a-zA-Z]+$/)) {
+  //   this.invalidate('name', 'Name must not contain special characters.')
+
+  // }
+  // if (this.name && this.name.match(/[0-9]/g)) {
+  //   this.invalidate('name', 'Name must not contain number.')
+  // }
+
 }, null)
 
 UserSchema.methods = {
