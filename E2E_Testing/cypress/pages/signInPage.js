@@ -5,7 +5,6 @@ export const signInForm = {
     LBL_SUBMIT: 'Submit',
     LBL_MYPROFILE: 'My Profile',
     LBL_SIGNOUT: 'Sign out',
-    DLG_NEWACCOUNT: '.MuiDialog-container p',
     TXT_ERRORMESSAGE: 'p.MuiTypography-root',
     inputEmail(email) {
         cy.get(this.TXT_EMAIL).type(email, { force: true });
@@ -26,6 +25,10 @@ export const signInForm = {
     },
     checkErrorMessage(message){
         cy.get(this.TXT_ERRORMESSAGE).contains(message).should("be.visible");
+        return this
+    },
+    goToProfilePage(){
+        cy.get(this.BTN).contains(this.LBL_MYPROFILE).click();
         return this
     }
 }

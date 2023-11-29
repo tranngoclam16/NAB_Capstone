@@ -1,18 +1,12 @@
 [
     {
-        "name": "Tran Ngoc Lam",
-        "email": "ngoclam@gmail.com",
-        "password": "@Bcd1234",
-        "message": "New account successfully created."
-    },
-    {
-        "message": "Name is required"
+        "message":  "Name, Email and Password are required"
     },
     {
         "name": " ",
         "email": " ",
         "password": "@Bcd1234",
-        "message": "Name is required"
+        "message": "Name and Email are required"
     },
     {
         "invalidName": [
