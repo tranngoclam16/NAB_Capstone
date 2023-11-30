@@ -4,6 +4,7 @@ export const signUpForm = {
     TXT_PASSWORD: 'input#password',
     BTN: 'button',
     LBL_SUBMIT: 'Submit',
+    LBL_SIGNIN: 'Sign In',
     DLG_NEWACCOUNT: '.MuiDialog-container p',
     TXT_ERRORMESSAGE: 'p.MuiTypography-root',
     inputName(name) {
@@ -28,6 +29,10 @@ export const signUpForm = {
     },
     checkErrorMessage(message){
         cy.get(this.TXT_ERRORMESSAGE).contains(message).should("be.visible");
+        return this
+    },
+    goToSignin(){
+        cy.get(this.BTN).contains(this.LBL_SIGNIN).click()
         return this
     }
 }

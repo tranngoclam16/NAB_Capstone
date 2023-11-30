@@ -5,6 +5,7 @@ export const signInForm = {
     LBL_SUBMIT: 'Submit',
     LBL_MYPROFILE: 'My Profile',
     LBL_SIGNOUT: 'Sign out',
+    LBL_SIGNIN: 'Sign In',
     TXT_ERRORMESSAGE: 'p.MuiTypography-root',
     inputEmail(email) {
         cy.get(this.TXT_EMAIL).type(email, { force: true });
@@ -29,6 +30,10 @@ export const signInForm = {
     },
     goToProfilePage(){
         cy.get(this.BTN).contains(this.LBL_MYPROFILE).click();
+        return this
+    },
+    goToSignin(){
+        cy.get(this.BTN).contains(this.LBL_SIGNIN).click()
         return this
     }
 }
