@@ -29,6 +29,7 @@ describe("Enroll", () => {
    cy.get('button').contains('Completed').should("be.visible");    
    cy.get('.MuiListItem-container').find('path').should('have.attr', 'd', 'M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z'); // Kiểm tra cả nội dung path (dấu tick)
    //cy.get('.MuiListItem-container').find('svg').should('have.class', 'MuiSvgIcon-root').and('have.css', 'color', '#38cc38');// Kiểm tra class
+   cy.get('.MuiListItem-container').find('svg').should('have.css', 'color', 'rgb(56, 204, 56)');// Kiểm tra class
    cy.get('button').contains('Sign out').click();
   });
 });
